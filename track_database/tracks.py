@@ -1,6 +1,6 @@
 import numpy as np
 
-from .primitives import line, circle
+from .primitives import *
 
 
 def acceleration_track(factor: float = 1.0):
@@ -24,21 +24,23 @@ def skidpad(factor: float = 1.0):
     left_cones = factor * np.concatenate(
         (
             line(-1.5, 0.0, -1.5, 15.0 - bruh, number_points=2, endpoint=False),
+            circular_arc(
+                x_center=9.125,
+                y_center=15.0,
+                radius=10.625,
+                start_angle=6.0 / 16.0 * 2.0 * np.pi,
+                end_angle=-6.0 / 16.0 * 2.0 * np.pi,
+                number_points=13,
+                endpoint=True,
+            ),
             circle(
-                9.125,
-                15.0,
-                10.625,
-                number_points=16,
-                endpoint=False,
-                trigonometric_sense=False,
-            )[:, [0, 1, 2, 3, 4, 5, 6, 10, 11, 12, 13, 14, 15]],
-            circle(
-                -9.125,
-                15.0,
-                7.625,
-                number_points=16,
-                endpoint=False,
+                x_center=-9.125,
+                y_center=15.0,
+                radius=7.625,
+                start_angle=0.0,
                 trigonometric_sense=True,
+                number_points=16,
+                endpoint=False,
             ),
             line(-1.5, 15.0 + bruh, -1.5, 40.0, number_points=3, startpoint=False),
         ),
@@ -48,21 +50,23 @@ def skidpad(factor: float = 1.0):
         (
             line(1.5, 0.0, 1.5, 15.0 - bruh, number_points=2, endpoint=False),
             circle(
-                9.125,
-                15.0,
-                7.625,
-                number_points=16,
-                endpoint=False,
+                x_center=9.125,
+                y_center=15.0,
+                radius=7.625,
+                start_angle=np.pi,
                 trigonometric_sense=False,
-            ),
-            circle(
-                -9.125,
-                15.0,
-                10.625,
                 number_points=16,
                 endpoint=False,
-                trigonometric_sense=True,
-            )[:, 2:15],
+            ),
+            circular_arc(
+                x_center=-9.125,
+                y_center=15.0,
+                radius=10.625,
+                start_angle=2.0 / 16.0 * 2.0 * np.pi,
+                end_angle=14.0 / 16.0 * 2.0 * np.pi,
+                number_points=13,
+                endpoint=True,
+            ),
             line(1.5, 15.0 + bruh, 1.5, 40.0, number_points=3, startpoint=False),
         ),
         axis=1,
@@ -71,20 +75,22 @@ def skidpad(factor: float = 1.0):
         (
             line(0.0, 0.0, 0.0, 15.0, number_points=10, endpoint=False),
             circle(
-                9.125,
-                15.0,
-                9.125,
+                x_center=9.125,
+                y_center=15.0,
+                radius=9.125,
+                start_angle=np.pi,
+                trigonometric_sense=False,
                 number_points=30,
                 endpoint=False,
-                trigonometric_sense=False,
             ),
             circle(
-                -9.125,
-                15.0,
-                9.125,
+                x_center=-9.125,
+                y_center=15.0,
+                radius=9.125,
+                start_angle=0.0,
+                trigonometric_sense=True,
                 number_points=30,
                 endpoint=False,
-                trigonometric_sense=True,
             ),
             line(0.0, 15.0, 0.0, 40.0, number_points=10, startpoint=False),
         ),

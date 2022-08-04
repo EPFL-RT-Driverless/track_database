@@ -41,8 +41,9 @@ def circle(
     x_center: float,
     y_center: float,
     radius: float,
+    start_angle: float,
+    trigonometric_sense: bool,
     number_points: int,
-    trigonometric_sense: bool = True,
     endpoint: bool = True,
 ) -> np.ndarray:
     """
@@ -50,16 +51,57 @@ def circle(
     :param x_center: x coordinate of the center.
     :param y_center: y coordinate of the center.
     :param radius: radius of the circle.
-    :param number_points: number of points to generate.
+    :param start_angle: angle of the first point.
     :param trigonometric_sense: if True, the circle is generated in the trigonometric sense.
+    :param number_points: number of points to generate.
     :param endpoint: whether to include the endpoints in the circle.
     :return: x and y coordinates of the circle.
     """
-    assert radius > 0.0
     if trigonometric_sense:
-        theta = np.linspace(0, 2 * np.pi, number_points, endpoint=endpoint)
+        return circular_arc(
+            x_center,
+            y_center,
+            radius,
+            start_angle,
+            start_angle + 2 * np.pi,
+            number_points,
+            endpoint,
+        )
     else:
-        theta = np.linspace(2 * np.pi, 0, number_points, endpoint=endpoint)
+        return circular_arc(
+            x_center,
+            y_center,
+            radius,
+            start_angle,
+            start_angle - 2 * np.pi,
+            number_points,
+            endpoint,
+        )
+
+
+def circular_arc(
+    x_center: float,
+    y_center: float,
+    radius: float,
+    start_angle: float,
+    end_angle: float,
+    number_points: int,
+    endpoint: bool = True,
+) -> np.ndarray:
+    """
+    Generates a circle.
+    :param x_center: x coordinate of the center.
+    :param y_center: y coordinate of the center.
+    :param radius: radius of the circle.
+    :param start_angle: angle of the first point.
+    :param end_angle: angle of the last point.
+    :param number_points: number of points to generate.
+    :param endpoint: whether to include the endpoints in the circle.
+
+    :return: x and y coordinates of the circle.
+    """
+    assert radius > 0.0
+    theta = np.linspace(start_angle, end_angle, number_points, endpoint=endpoint)
     x_circle = x_center + radius * np.cos(theta)
     y_circle = y_center + radius * np.sin(theta)
-    return np.concatenate((x_circle.reshape(1, -1), y_circle.reshape(1, -1)), axis=0)
+    return np.array([x_circle, y_circle])
