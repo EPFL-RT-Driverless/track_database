@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="track_database",
-    version="1.0.1",
+    version="1.0.2",
     packages=["track_database"],
     package_dir={"track_database": "track_database"},
     package_data={"track_database": ["data/*.csv"]},
