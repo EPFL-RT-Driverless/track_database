@@ -89,7 +89,7 @@ def circular_arc(
     endpoint: bool = True,
 ) -> np.ndarray:
     """
-    Generates a circle.
+    Generates a circular arc.
     :param x_center: x coordinate of the center.
     :param y_center: y coordinate of the center.
     :param radius: radius of the circle.
