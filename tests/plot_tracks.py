@@ -16,8 +16,8 @@ if __name__ == "__main__":
     # load default FS track from file ===================================================
     # center_line, left_cones, right_cones = import_default_fs_track()
 
-    plt.plot(center_line[0, :], center_line[1, :], "r-")
-    plt.plot(left_cones[0, :], left_cones[1, :], "b+")
-    plt.plot(right_cones[0, :], right_cones[1, :], "y+")
+    plt.scatter(center_line[0, :], center_line[1, :], color="red", marker="+")
+    plt.scatter(left_cones[0, :], left_cones[1, :], color="blue", marker="^")
+    plt.scatter(right_cones[0, :], right_cones[1, :], color="yellow", marker="^")
     plt.axis("equal")
     plt.show()

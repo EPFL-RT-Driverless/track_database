@@ -7,13 +7,7 @@ def acceleration_track(factor: float = 1.0):
     assert 0.0 < factor <= 1.0
     left_cones = factor * line(-1.5, 0.3, -1.5, 150.3, number_points=30, endpoint=True)
     right_cones = factor * line(1.5, 0.3, 1.5, 150.3, number_points=30, endpoint=True)
-    center_line = factor * np.concatenate(
-        (
-            line(0.0, 0.3, 0.0, 150.3, number_points=30, endpoint=True),
-            np.array([[0.0], [0.0]]),
-        ),
-        axis=1,
-    )
+    center_line = factor * line(0.0, 0.0, 0.0, 150.3, number_points=30, endpoint=True)
     return center_line, left_cones, right_cones
 
 
