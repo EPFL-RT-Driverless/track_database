@@ -26,3 +26,5 @@ The package has the following modules:
   particular for Minimercury).
 - `defaults.py`: defines functions to import default FS tracks (acceleration, 
   skidpad and a complete FS track for autocross/trackdrive at 1:1 scale).
+
+## Track file format description
