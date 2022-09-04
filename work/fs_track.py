@@ -10,16 +10,17 @@ import trajectory_planning_helpers as tph
 # import FS track from database =================================================
 start = perf_counter()
 center_points, widths, right_cones, left_cones = load_default_fs_track()
-N = center_points.shape[0] - 1  # index of the last point, N = 54
+rot_matrix = np.array(
+    [
+        [np.cos(-np.pi / 2), -np.sin(-np.pi / 2)],
+        [np.sin(-np.pi / 2), np.cos(-np.pi / 2)],
+    ]
+)
+center_points = np.matmul(center_points, rot_matrix.T)
+right_cones = np.matmul(right_cones, rot_matrix.T)
+left_cones = np.matmul(left_cones, rot_matrix.T)
 
-# plot track with cones ===========================================================
-# plt.figure()
-# plt.scatter(center_points[:, 0], center_points[:, 1], label="center", color="black")
-# plt.scatter(left_cones[:, 0], left_cones[:, 1], label="left", color="blue")
-# plt.scatter(right_cones[:, 0], right_cones[:, 1], label="right", color="yellow")
-# plt.axis("equal")
-# plt.title("original reference points and cones")
-# plt.show()
+N = center_points.shape[0] - 1  # index of the last point, N = 54
 
 # interpolate track with cubic splines ============================================
 coeffs_x, coeffs_y, M, normvec_normalized = tph.calc_splines(
@@ -74,7 +75,7 @@ y_vs_arc_length = InterpolatedUnivariateSpline(
 
 # track widths =====================================================================
 w_track = widths
-w_track = np.ones((N + 1, 2)) * 1.5
+# w_track = np.ones((N + 1, 2)) * 1.5
 
 w_track_interp = tph.interp_track_widths(
     w_track,
@@ -130,6 +131,7 @@ plt.plot(bound1[:, 0], bound1[:, 1], color="yellow", zorder=1)
 plt.scatter(right_cones[:, 0], right_cones[:, 1], color="yellow", zorder=10)
 plt.axis("equal")
 plt.tight_layout()
+# plt.title("minimum curvature optimization, width_left/right = 1.5m")
 plt.show()
 
 # determine the heading angles and curvatures of each one of the new points =========
