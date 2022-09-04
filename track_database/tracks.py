@@ -1,6 +1,9 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 import numpy as np
 
 from .primitives import *
+
+__all__ = ["acceleration_track", "skidpad"]
 
 
 def acceleration_track(factor: float = 1.0):

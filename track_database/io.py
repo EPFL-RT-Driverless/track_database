@@ -1,7 +1,10 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 import numpy as np
 import pandas as pd
 
 from .constants import *
+
+__all__ = ["load_track", "export_track"]
 
 
 def load_track(path: str):

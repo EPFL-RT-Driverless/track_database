@@ -1,3 +1,4 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 from setuptools import setup
 
 with open("README.md") as f:

@@ -1,3 +1,4 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 __all__ = ["center_labels", "left_labels", "right_labels"]
 
 center_labels = ["X_center", "Y_center"]

@@ -1,3 +1,4 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 import numpy as np
 from time import perf_counter
 from scipy.interpolate import PPoly, CubicSpline, InterpolatedUnivariateSpline

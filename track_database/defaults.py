@@ -1,6 +1,13 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 import os
 
 from .io import load_track
+
+__all__ = [
+    "import_default_acceleration_track",
+    "import_default_skidpad",
+    "import_default_fs_track",
+]
 
 
 def import_default_skidpad():

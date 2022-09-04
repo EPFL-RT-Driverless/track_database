@@ -1,4 +1,7 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 import numpy as np
+
+__all__ = ["circle", "circular_arc", "line"]
 
 
 def line(

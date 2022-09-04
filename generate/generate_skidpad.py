@@ -1,3 +1,4 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 from os.path import join, dirname
 from track_database import *
 

@@ -1,3 +1,4 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 import matplotlib.pyplot as plt
 from track_database import *
 
