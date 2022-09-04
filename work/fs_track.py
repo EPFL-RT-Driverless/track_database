@@ -9,17 +9,7 @@ import trajectory_planning_helpers as tph
 
 # import FS track from database =================================================
 start = perf_counter()
-center_points, left_cones, right_cones = import_default_fs_track()
-rot_matrix = np.array(
-    [[np.cos(np.pi / 2), -np.sin(np.pi / 2)], [np.sin(np.pi / 2), np.cos(np.pi / 2)]]
-)
-offset = np.expand_dims(center_points[:, 0], 1)
-center_points = np.transpose(rot_matrix @ (center_points[:, :-1] - offset))
-left_cones = np.transpose(rot_matrix @ (left_cones[:, :-1] - offset))
-right_cones = np.transpose(rot_matrix @ (right_cones[:, :-1] - offset))
-# center_points = np.transpose(center_points[:, :-1])
-# left_cones = np.transpose(left_cones[:, :-1])
-# right_cones = np.transpose(right_cones[:, :-1])
+center_points, widths, right_cones, left_cones = load_default_fs_track()
 N = center_points.shape[0] - 1  # index of the last point, N = 54
 
 # plot track with cones ===========================================================
@@ -83,16 +73,8 @@ y_vs_arc_length = InterpolatedUnivariateSpline(
 # plt.show()
 
 # track widths =====================================================================
-# w_left = np.hypot(
-#     left_cones[:, 0] - center_points[:, 0], left_cones[:, 1] - center_points[:, 1]
-# )
-# w_left = np.append(w_left, w_left[0])
-# w_right = np.hypot(
-#     right_cones[:, 0] - center_points[:, 0], right_cones[:, 1] - center_points[:, 1]
-# )
-# w_right = np.append(w_right, w_right[0])
-# w_track = np.hstack((np.expand_dims(w_right, axis=1), np.expand_dims(w_left, axis=1)))
-w_track = np.ones((N + 1, 2)) * 3.0
+w_track = widths
+w_track = np.ones((N + 1, 2)) * 1.5
 
 w_track_interp = tph.interp_track_widths(
     w_track,
@@ -147,6 +129,7 @@ plt.scatter(left_cones[:, 0], left_cones[:, 1], color="blue", zorder=10)
 plt.plot(bound1[:, 0], bound1[:, 1], color="yellow", zorder=1)
 plt.scatter(right_cones[:, 0], right_cones[:, 1], color="yellow", zorder=10)
 plt.axis("equal")
+plt.tight_layout()
 plt.show()
 
 # determine the heading angles and curvatures of each one of the new points =========
