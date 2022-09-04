@@ -1,17 +1,35 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
+import os
+from typing import Tuple
+
 import numpy as np
 
 from .primitives import *
+from .io import *
+
+__all__ = [
+    "acceleration_track",
+    "skidpad",
+    "load_default_acceleration_track",
+    "load_default_skidpad",
+    "load_default_fs_track",
+]
 
 
-def acceleration_track(factor: float = 1.0):
+def acceleration_track(
+    factor: float = 1.0,
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     assert 0.0 < factor <= 1.0
+    center_line = factor * line(0.0, 0.0, 0.0, 150.3, number_points=30, endpoint=True)
+    widths = 1.5 * factor * np.ones_like(center_line)
     left_cones = factor * line(-1.5, 0.3, -1.5, 150.3, number_points=30, endpoint=True)
     right_cones = factor * line(1.5, 0.3, 1.5, 150.3, number_points=30, endpoint=True)
-    center_line = factor * line(0.0, 0.0, 0.0, 150.3, number_points=30, endpoint=True)
-    return center_line, left_cones, right_cones
+    return center_line, widths, left_cones, right_cones
 
 
-def skidpad(factor: float = 1.0):
+def skidpad(
+    factor: float = 1.0,
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     assert 0.0 < factor <= 1.0
     # start of 15m, end of 25m
     bruh = np.sqrt(9.125**2 - (9.125 - 1.5) ** 2)
@@ -38,7 +56,7 @@ def skidpad(factor: float = 1.0):
             ),
             line(-1.5, 15.0 + bruh, -1.5, 40.0, number_points=3, startpoint=False),
         ),
-        axis=1,
+        axis=0,
     )
     right_cones = factor * np.concatenate(
         (
@@ -63,7 +81,7 @@ def skidpad(factor: float = 1.0):
             ),
             line(1.5, 15.0 + bruh, 1.5, 40.0, number_points=3, startpoint=False),
         ),
-        axis=1,
+        axis=0,
     )
     center_line = factor * np.concatenate(
         (
@@ -88,6 +106,36 @@ def skidpad(factor: float = 1.0):
             ),
             line(0.0, 15.0, 0.0, 40.0, number_points=10, startpoint=False),
         ),
-        axis=1,
+        axis=0,
     )
-    return center_line, left_cones, right_cones
+    widths = 1.5 * factor * np.ones_like(center_line)
+    return center_line, widths, left_cones, right_cones
+
+
+def load_default_skidpad() -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Loads the default track for the skidpad event.
+    Returns the center line, the widths, the right and the left cones, in this order.
+    """
+    path = os.path.join(os.path.dirname(__file__), "data/default_skidpad")
+    return load_data(path)
+
+
+def load_default_acceleration_track() -> Tuple[
+    np.ndarray, np.ndarray, np.ndarray, np.ndarray
+]:
+    """
+    Loads the default track for the acceleration event.
+    Returns the center line, the widths, the right and the left cones, in this order.
+    """
+    path = os.path.join(os.path.dirname(__file__), "data/default_acceleration_track")
+    return load_data(path)
+
+
+def load_default_fs_track() -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """
+    Loads the default track for the Formula Student event.
+    Returns the center line, the widths, the right and the left cones, in this order.
+    """
+    path = os.path.join(os.path.dirname(__file__), "data/fs_track")
+    return load_data(path)

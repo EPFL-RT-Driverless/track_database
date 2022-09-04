@@ -1,4 +1,7 @@
+# Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 import numpy as np
+
+__all__ = ["circle", "circular_arc", "line"]
 
 
 def line(
@@ -32,9 +35,7 @@ def line(
         x_line = np.linspace(x_1, x_2, number_points, endpoint=endpoint)
         y_line = np.linspace(y_1, y_2, number_points, endpoint=endpoint)
 
-    x_line = x_line.reshape(1, -1)
-    y_line = y_line.reshape(1, -1)
-    return np.concatenate((x_line, y_line), axis=0)
+    return np.transpose(np.array([x_line, y_line]))
 
 
 def circle(
@@ -104,4 +105,4 @@ def circular_arc(
     theta = np.linspace(start_angle, end_angle, number_points, endpoint=endpoint)
     x_circle = x_center + radius * np.cos(theta)
     y_circle = y_center + radius * np.sin(theta)
-    return np.array([x_circle, y_circle])
+    return np.transpose(np.array([x_circle, y_circle]))
