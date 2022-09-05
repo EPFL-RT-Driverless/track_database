@@ -136,7 +136,7 @@ reference_velocities = np.hstack((reference_velocities, reference_velocities[0])
 
 plt.figure()
 plt.plot(new_center_points[:, 0], new_center_points[:, 1], "k:")
-plt.plot(reference_points[:, 0], reference_points[:, 1], color="orange")
+# plt.plot(reference_points[:, 0], reference_points[:, 1], color="orange")
 plot_colored_line(
     plt.gcf(),
     plt.gca(),
@@ -146,10 +146,9 @@ plot_colored_line(
     cmap="viridis",
 )
 plt.plot(right_bound[:, 0], right_bound[:, 1], color="yellow", zorder=1)
-plt.scatter(left_cones[:, 0], left_cones[:, 1], color="yellow", zorder=10)
+plt.scatter(right_cones[:, 0], right_cones[:, 1], color="yellow", zorder=10, marker="^")
 plt.plot(left_bound[:, 0], left_bound[:, 1], color="blue", zorder=1)
-plt.scatter(right_cones[:, 0], right_cones[:, 1], color="blue", zorder=10)
+plt.scatter(left_cones[:, 0], left_cones[:, 1], color="blue", zorder=10, marker="^")
 plt.axis("equal")
 plt.tight_layout()
-# plt.title("minimum curvature optimization, width_left/right = 1.5m")
 plt.show()

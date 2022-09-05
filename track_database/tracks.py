@@ -24,7 +24,7 @@ def acceleration_track(
     widths = 1.5 * factor * np.ones_like(center_line)
     left_cones = factor * line(-1.5, 0.3, -1.5, 150.3, number_points=30, endpoint=True)
     right_cones = factor * line(1.5, 0.3, 1.5, 150.3, number_points=30, endpoint=True)
-    return center_line, widths, left_cones, right_cones
+    return center_line, widths, right_cones, left_cones
 
 
 def skidpad(
@@ -109,7 +109,7 @@ def skidpad(
         axis=0,
     )
     widths = 1.5 * factor * np.ones_like(center_line)
-    return center_line, widths, left_cones, right_cones
+    return center_line, widths, right_cones, left_cones
 
 
 def load_default_skidpad() -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:

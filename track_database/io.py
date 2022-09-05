@@ -43,8 +43,8 @@ def save_data(
     path: str,
     center_points: np.ndarray,
     widths: np.ndarray,
-    left_cones: np.ndarray,
     right_cones: np.ndarray,
+    left_cones: np.ndarray,
 ):
     """
     Exports track data to a CSV file at the given path.
