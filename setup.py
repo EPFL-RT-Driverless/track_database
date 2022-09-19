@@ -7,11 +7,15 @@ with open("README.md") as f:
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
     # delete lines starting with # and empty lines
-    requirements = [line for line in requirements if not line.startswith("#") and line]
+    requirements = [
+        r
+        for r in requirements
+        if not (r.startswith("#") or r.startswith("-e git+") or r.startswith("git+"))
+    ]
 
 setup(
     name="track_database",
-    version="2.0.0",
+    version="2.0.1",
     packages=["track_database"],
     package_dir={"track_database": "track_database"},
     package_data={"track_database": ["data/*.csv"]},
