@@ -1,3 +1,0 @@
-[submodule "external/trajectory_planning_helpers"]
-	path = external/trajectory_planning_helpers
-	url = https://github.com/EPFL-RT-Driverless/trajectory_planning_helpers
