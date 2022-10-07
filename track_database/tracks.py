@@ -12,6 +12,7 @@ __all__ = [
     "skidpad",
     "load_default_acceleration_track",
     "load_default_skidpad",
+    "load_default_short_skidpad",
     "load_default_fs_track",
 ]
 
@@ -28,7 +29,7 @@ def acceleration_track(
 
 
 def skidpad(
-    factor: float = 1.0,
+    factor: float = 1.0, short: bool = True
 ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     assert 0.0 < factor <= 1.0
     # start of 15m, end of 25m
@@ -83,9 +84,20 @@ def skidpad(
         ),
         axis=0,
     )
-    center_line = factor * np.concatenate(
-        (
-            line(0.0, 0.0, 0.0, 15.0, number_points=10, endpoint=False),
+    center_line_parts = [
+        line(0.0, 0.0, 0.0, 15.0, number_points=10, endpoint=False),
+        circle(
+            x_center=9.125,
+            y_center=15.0,
+            radius=9.125,
+            start_angle=np.pi,
+            trigonometric_sense=False,
+            number_points=30,
+            endpoint=False,
+        ),
+    ]
+    if not short:
+        center_line_parts.append(
             circle(
                 x_center=9.125,
                 y_center=15.0,
@@ -94,7 +106,9 @@ def skidpad(
                 trigonometric_sense=False,
                 number_points=30,
                 endpoint=False,
-            ),
+            )
+        )
+        center_line_parts.append(
             circle(
                 x_center=-9.125,
                 y_center=15.0,
@@ -103,9 +117,24 @@ def skidpad(
                 trigonometric_sense=True,
                 number_points=30,
                 endpoint=False,
-            ),
-            line(0.0, 15.0, 0.0, 40.0, number_points=10, startpoint=False),
-        ),
+            )
+        )
+    center_line_parts.append(
+        circle(
+            x_center=-9.125,
+            y_center=15.0,
+            radius=9.125,
+            start_angle=0.0,
+            trigonometric_sense=True,
+            number_points=30,
+            endpoint=False,
+        )
+    )
+    center_line_parts.append(
+        line(0.0, 15.0, 0.0, 40.0, number_points=10, startpoint=False)
+    )
+    center_line = factor * np.concatenate(
+        center_line_parts,
         axis=0,
     )
     widths = 1.5 * factor * np.ones_like(center_line)
@@ -118,6 +147,17 @@ def load_default_skidpad() -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarr
     Returns the center line, the widths, the right and the left cones, in this order.
     """
     path = os.path.join(os.path.dirname(__file__), "data/default_skidpad")
+    return load_data(path)
+
+
+def load_default_short_skidpad() -> Tuple[
+    np.ndarray, np.ndarray, np.ndarray, np.ndarray
+]:
+    """
+    Loads the default track for the skidpad event.
+    Returns the center line, the widths, the right and the left cones, in this order.
+    """
+    path = os.path.join(os.path.dirname(__file__), "data/default_short_skidpad")
     return load_data(path)
 
 
