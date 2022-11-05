@@ -5,7 +5,7 @@ from typing import Tuple
 import numpy as np
 
 from .primitives import *
-from .io import *
+from .utils import *
 
 __all__ = [
     "acceleration_track",
