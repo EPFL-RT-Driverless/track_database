@@ -1,4 +1,9 @@
+# v2.1.1
+
+Changed the initial point to have initial heading angle=pi/2 and to avoid weird stuff in interpolation.
+
 # v2.1.0
+
 Added modified skidpad tracks to have short version (only one times each loop)
 as well ass the full version (two times each loop).
 They can be imported with `load_default_skidpad()` and `load_default_short_skidpad()`
