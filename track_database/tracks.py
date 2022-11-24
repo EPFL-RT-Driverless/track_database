@@ -3,7 +3,7 @@ import numpy as np
 
 from .utils import *
 
-__all__ = []
+__all__ = ["available_tracks", "load_track", "Track"]
 
 available_tracks = [
     "acceleration",
