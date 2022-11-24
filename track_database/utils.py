@@ -1,65 +1,92 @@
 # Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
-import os
-from typing import Tuple
-
 import numpy as np
 
-__all__ = ["load_data", "save_data"]
+__all__ = ["load_cones", "save_cones", "load_center_line", "save_center_line"]
 
 
-def load_data(path: str) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def load_cones(
+    filename: str,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
-    Loads data from a directory containing 4 CSV files:
-    - center.csv: each row contains the x and y coordinates of a point on the center line
-    - widths.csv: each row contains the right and left (in this order) width of the track at the
-      corresponding point on the center line
-    - right_cones.csv: each row contains the x and y coordinates of a cone on the right
-      side of the track
-    - left_cones.csv: each row contains the x and y coordinates of a cone on the left
-      side of the track
-    Raises an error if not all the files are found or the first two do not have the same
-    number of rows.
+    Loads the cones stored in CSV file specified by filename. This file must have the
+    following format:
+        cone_type,X,Y,Z,std_X,std_Y,std_Z,right,left
+    The returned arrays correspond to (in this order) the blue cones, yellow cones, big
+    orange cones, small orange cones (possibly empty), right cones and left cones (all
+    colors .
     """
-    # assert that the given path is a directory and contains the right files
-    assert os.path.isdir(path)
-    assert os.path.isfile(os.path.join(path, "center.csv"))
-    assert os.path.isfile(os.path.join(path, "widths.csv"))
-    assert os.path.isfile(os.path.join(path, "left_cones.csv"))
-    assert os.path.isfile(os.path.join(path, "right_cones.csv"))
-    # read the data from the files using np.loadtxt
-    center = np.loadtxt(os.path.join(path, "center.csv"), delimiter=",", comments="#")
-    widths = np.loadtxt(os.path.join(path, "widths.csv"), delimiter=",", comments="#")
-    left_cones = np.loadtxt(
-        os.path.join(path, "left_cones.csv"), delimiter=",", comments="#"
+    arr = np.genfromtxt(filename, delimiter=",", dtype=str, skip_header=1)
+    blue_cones = arr[arr[:, 0] == "blue"][:, 1:3].astype(float)
+    yellow_cones = arr[arr[:, 0] == "yellow"][:, 1:3].astype(float)
+    big_orange_cones = arr[arr[:, 0] == "big_orange"][:, 1:3].astype(float)
+    small_orange_cones = arr[arr[:, 0] == "small_orange"][:, 1:3].astype(float)
+    right_cones = arr[arr[:, 7] == "1"][:, 1:3].astype(float)
+    left_cones = arr[arr[:, 8] == "1"][:, 1:3].astype(float)
+    return (
+        blue_cones,
+        yellow_cones,
+        big_orange_cones,
+        small_orange_cones,
+        right_cones,
+        left_cones,
     )
-    right_cones = np.loadtxt(
-        os.path.join(path, "right_cones.csv"), delimiter=",", comments="#"
-    )
-    assert center.shape[0] == widths.shape[0]
-    return center, widths, right_cones, left_cones
 
 
-def save_data(
-    path: str,
-    center_points: np.ndarray,
-    widths: np.ndarray,
-    right_cones: np.ndarray,
-    left_cones: np.ndarray,
+def save_cones(
+    filename: str, blue_cones, yellow_cones, big_orange_cones, small_orange_cones
 ):
     """
-    Exports track data to a CSV file at the given path.
+    Save the cones in CSV file specified by filename. This file will have the following
+    format:
+        cone_type,X,Y,Z,std_X,std_Y,std_Z,right,left
     """
-    if os.path.exists(path) and not os.path.isdir(path):
-        raise ValueError("Path already exists and is not a directory")
-    if not os.path.exists(path):
-        os.mkdir(path)
-    elif os.path.isdir(path):
-        for file in os.listdir(path):
-            os.remove(os.path.join(path, file))
+    with open(filename, "w") as f:
+        f.write("cone_type,X,Y,Z,std_X,std_Y,std_Z,right,left\n")
+        for cone in blue_cones:
+            f.write("blue,{},{},0.0,0.0,0.0,0.0,0,1\n".format(cone[0], cone[1]))
+        for cone in yellow_cones:
+            f.write("yellow,{},{},0.0,0.0,0.0,0.0,1,0\n".format(cone[0], cone[1]))
+        for cone in big_orange_cones:
+            f.write(
+                "big_orange,{},{},0.0,0.0,0.0,0.0,{},{}\n".format(
+                    cone[0],
+                    cone[1],
+                    int(cone[0] > 0),
+                    int(cone[0] < 0),
+                )
+            )
+        for cone in small_orange_cones:
+            f.write(
+                "small_orange,{},{},0.0,0.0,0.0,0.0,{},{}\n".format(
+                    cone[0],
+                    cone[1],
+                    int(cone[0] > 0),
+                    int(cone[0] < 0),
+                )
+            )
 
-    assert center_points.shape[0] == widths.shape[0]
 
-    np.savetxt(os.path.join(path, "center.csv"), center_points, delimiter=",")
-    np.savetxt(os.path.join(path, "widths.csv"), widths, delimiter=",")
-    np.savetxt(os.path.join(path, "left_cones.csv"), left_cones, delimiter=",")
-    np.savetxt(os.path.join(path, "right_cones.csv"), right_cones, delimiter=",")
+def load_center_line(filename: str) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Loads the center line stored in CSV file specified by filename. This file must have
+    the following format:
+        X,Y,right_width,left_width
+    Returns the center line as a numpy array of shape (N, 2) and the corresponding
+    (right and left) track widths as a numpy array of shape (N,2).
+    """
+    arr = np.genfromtxt(filename, delimiter=",", dtype=float, skip_header=1)
+    return arr[:, :2], arr[:, 2:]
+
+
+def save_center_line(filename: str, center_line: np.ndarray, track_widths: np.ndarray):
+    """
+    Save the center line in CSV file specified by filename. This file will have the
+    following format:
+        X,Y,right_width,left_width
+    """
+    np.savetxt(
+        filename,
+        np.hstack((center_line, track_widths)),
+        delimiter=",",
+        header="x,y,right_width,left_width",
+    )
