@@ -1,7 +1,14 @@
 # Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 import numpy as np
+from matplotlib import pyplot as plt
 
-__all__ = ["load_cones", "save_cones", "load_center_line", "save_center_line"]
+__all__ = [
+    "load_cones",
+    "save_cones",
+    "load_center_line",
+    "save_center_line",
+    "plot_cones",
+]
 
 
 def load_cones(
@@ -90,3 +97,33 @@ def save_center_line(filename: str, center_line: np.ndarray, track_widths: np.nd
         delimiter=",",
         header="x,y,right_width,left_width",
     )
+
+
+def plot_cones(
+    blue_cones,
+    yellow_cones,
+    big_orange_cones,
+    small_orange_cones,
+    origin=np.zeros(2),
+    show=True,
+):
+    plt.scatter(blue_cones[:, 0], blue_cones[:, 1], s=7, c="b", marker="^")
+    plt.scatter(yellow_cones[:, 0], yellow_cones[:, 1], s=7, c="y", marker="^")
+    plt.scatter(
+        big_orange_cones[:, 0], big_orange_cones[:, 1], s=14, c="orange", marker="^"
+    )
+    try:
+        plt.scatter(
+            small_orange_cones[:, 0],
+            small_orange_cones[:, 1],
+            s=7,
+            c="orange",
+            marker="^",
+        )
+    except IndexError:
+        pass
+    plt.scatter(origin[0], origin[1], c="g", marker="x")
+    plt.axis("equal")
+    plt.tight_layout()
+    if show:
+        plt.show()

@@ -1,4 +1,6 @@
 # Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
+import os.path
+
 import numpy as np
 
 from .utils import *
@@ -55,8 +57,10 @@ class Track:
             self.small_orange_cones,
             self.right_cones,
             self.left_cones,
-        ) = load_cones("data/cones.csv")
-        self.center_line, self.track_widths = load_center_line("data/center_line.csv")
+        ) = load_cones(os.path.dirname(__file__) + "/data/" + name + "/cones.csv")
+        self.center_line, self.track_widths = load_center_line(
+            os.path.dirname(__file__) + "/data/" + name + "/center_line.csv"
+        )
 
 
 def load_track(name: str) -> Track:
