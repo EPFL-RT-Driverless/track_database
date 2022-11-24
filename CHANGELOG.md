@@ -1,3 +1,7 @@
+# v3.0.0
+Integrated the FSDS tracks and changed the way the tracks and cones are stored and
+interfaced.
+
 # v2.1.1
 
 Changed the initial point to have initial heading angle=pi/2 and to avoid weird stuff in interpolation.
