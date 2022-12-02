@@ -1,6 +1,7 @@
 # v3.0.0
-Integrated the FSDS tracks and changed the way the tracks and cones are stored and
-interfaced.
+Integrated the FSDS tracks and changed the way the tracks and cones are stored
+and interfaced. Now each track is stored using only two files (one for the cones
+positions and one for the center line points and the track widths).
 
 # v2.1.1
 

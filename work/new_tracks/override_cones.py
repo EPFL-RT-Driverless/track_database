@@ -3,8 +3,8 @@ from fsds_to_cones import *
 
 def main():
     root = "FSDSdefault/"
-    angle = np.pi / 2 - 1.6856144444524332
-    # angle = 0.0
+    # angle = np.pi / 2 - 1.6856144444524332
+    angle = 0.0
     # offset = np.array([-1.26, 0.0])
     offset = np.zeros(2)
     (
@@ -23,9 +23,9 @@ def main():
     yellow_cones = np.dot(yellow_cones, rot)
     big_orange_cones = np.dot(big_orange_cones, rot)
 
-    write_cones_csv(
-        root, blue_cones, yellow_cones, big_orange_cones, small_orange_cones
-    )
+    # write_cones_csv(
+    #     root, blue_cones, yellow_cones, big_orange_cones, small_orange_cones
+    # )
     plot_cones(
         blue_cones,
         yellow_cones,
