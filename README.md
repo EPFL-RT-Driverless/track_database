@@ -28,12 +28,12 @@ The package has the following modules:
 ## Track file format description
 A track with name `track_name` is stored in the folder [`track_database/data`](track_database/data/)
 as a folder named `track_name` containing the following files:
-- `cones.csv`: contains the cones positions in a format compatible with FSDS to
+- `track_name_cones.csv`: contains the cones positions in a format compatible with FSDS to
   be loadable at runtime: `cone_type,X,Y,Z,std_X,std_Y,std_Z,right,left`.
   The `cone_type` is either `blue`, `yellow`, `big_orange` or `small_orange`.
   The `right` and `left` columns are binary (0 or 1) values indicating if the cone
   is on the right or left side of the track.
   `std_X`, `std_Y` and `std_Z` are the standard deviations of the cone position,
   usually 0.
-- `center_line.csv`: contains the center line points in the following format:
+- `track_name_center_line.csv`: contains the center line points in the following format:
   `x,y,right_width,left_width`.

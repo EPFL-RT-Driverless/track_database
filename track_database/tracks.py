@@ -57,9 +57,16 @@ class Track:
             self.small_orange_cones,
             self.right_cones,
             self.left_cones,
-        ) = load_cones(os.path.dirname(__file__) + "/data/" + name + "/cones.csv")
+        ) = load_cones(
+            os.path.dirname(__file__) + "/data/" + name + "/" + name + "_cones.csv"
+        )
         self.center_line, self.track_widths = load_center_line(
-            os.path.dirname(__file__) + "/data/" + name + "/center_line.csv"
+            os.path.dirname(__file__)
+            + "/data/"
+            + name
+            + "/"
+            + name
+            + "_center_line.csv"
         )
 
 

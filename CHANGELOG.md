@@ -1,4 +1,10 @@
+# v3.0.1
+
+Renamed all data files to the format `<track_name>_cones.csv` and `<track_name>_center_line.csv`
+to facilitate the extraction of the track name from `fsds_client`.
+
 # v3.0.0
+
 Integrated the FSDS tracks and changed the way the tracks and cones are stored
 and interfaced. Now each track is stored using only two files (one for the cones
 positions and one for the center line points and the track widths).
