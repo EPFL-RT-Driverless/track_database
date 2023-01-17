@@ -1,3 +1,7 @@
+# v3.0.2
+
+removed two misplaced points on the center line of the acceleration track
+
 # v3.0.1
 
 Renamed all data files to the format `<track_name>_cones.csv` and `<track_name>_center_line.csv`
