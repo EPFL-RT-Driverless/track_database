@@ -15,7 +15,7 @@ with open("requirements.txt") as f:
 
 setup(
     name="track_database",
-    version="3.0.2",
+    version="3.0.3",
     packages=["track_database"],
     package_dir={"track_database": "track_database"},
     package_data={"track_database": ["data/*.csv"]},

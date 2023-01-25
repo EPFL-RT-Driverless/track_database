@@ -1,3 +1,7 @@
+# v3.0.3
+
+added `COLCON_IGNORE` file to ignore this package in colcon builds (for brains repo)
+
 # v3.0.2
 
 removed two misplaced points on the center line of the acceleration track
