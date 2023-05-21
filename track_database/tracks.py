@@ -15,6 +15,7 @@ available_tracks = [
     "fsds_competition_2",
     "fsds_competition_3",
     "fsds_default",
+    "21_05_2023",
 ]
 
 
