@@ -10,12 +10,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-
 def main(name, right_width, left_width):
     yellow_line_1 = line(-left_width, 0.0, -left_width, 30.0, 8, endpoint=False)
     blue_line_1 = line(right_width, 0.0, right_width, 30.0, 8, endpoint=False)
-    yellow_line_2 = line(-15.0 + left_width, 30.0, -15.0 + left_width, 0.0, 8, startpoint=False)
-    blue_line_2 = line(-15.0 - right_width, 30.0, -15.0 - right_width, 0.0, 8, startpoint=False)
+    yellow_line_2 = line(
+        -15.0 + left_width, 30.0, -15.0 + left_width, 0.0, 8, startpoint=False
+    )
+    blue_line_2 = line(
+        -15.0 - right_width, 30.0, -15.0 - right_width, 0.0, 8, startpoint=False
+    )
     yellow_arc_1 = circular_arc(
         -7.5, 30.0, 7.5 - left_width, 0.0, np.pi, 7, endpoint=True
     )
@@ -40,9 +43,7 @@ def main(name, right_width, left_width):
 
 
 def visualize(name):
-    blue_cones, yellow_cones, _, _, _, _ = load_cones(
-        f"{name}_cones.csv"
-    )
+    blue_cones, yellow_cones, _, _, _, _ = load_cones(f"{name}_cones.csv")
     plot_cones(blue_cones, yellow_cones, np.empty((0, 2)), np.empty((0, 2)), show=False)
     center_line, _ = load_center_line(f"{name}_center_line.csv")
     plt.plot(center_line[:, 0], center_line[:, 1], "k--")
