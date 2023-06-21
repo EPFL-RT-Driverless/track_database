@@ -27,7 +27,14 @@ def main(name, right_width, left_width):
     )
     blue_cones = np.concatenate((blue_line_1, blue_arc_1, blue_line_2))
     yellow_cones = np.concatenate((yellow_line_1, yellow_arc_1, yellow_line_2))
-    big_orange_cones = np.array([[1.5, 4.75], [1.5, 5.25], [-1.5, 4.75], [-1.5, 5.25]])
+    big_orange_cones = np.array(
+        [
+            [right_width, 4.75],
+            [right_width, 5.25],
+            [-left_width, 4.75],
+            [-left_width, 5.25],
+        ]
+    )
     save_cones(f"{name}_cones.csv", blue_cones, yellow_cones, big_orange_cones, [])
 
     center_line = np.vstack(
@@ -43,8 +50,13 @@ def main(name, right_width, left_width):
 
 
 def visualize(name):
-    blue_cones, yellow_cones, _, _, _, _ = load_cones(f"{name}_cones.csv")
+    blue_cones, yellow_cones, big_orange_cones, _, _, _ = load_cones(
+        f"{name}_cones.csv"
+    )
     plot_cones(blue_cones, yellow_cones, np.empty((0, 2)), np.empty((0, 2)), show=False)
+    plt.scatter(
+        big_orange_cones[:, 0], big_orange_cones[:, 1], c="orange", marker="^", s=28
+    )
     center_line, _ = load_center_line(f"{name}_center_line.csv")
     plt.plot(center_line[:, 0], center_line[:, 1], "k--")
     plt.scatter(center_line[:, 0], center_line[:, 1], c="k")
