@@ -1,3 +1,7 @@
+# v3.2.0
+
+added VSV and VSV_XL track (U-turns and acceleration tests)
+
 # v3.1.0
 
 added new track (oval) for the tests on 21/05/2023

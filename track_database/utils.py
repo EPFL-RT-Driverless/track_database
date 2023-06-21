@@ -107,10 +107,10 @@ def plot_cones(
     origin=np.zeros(2),
     show=True,
 ):
-    plt.scatter(blue_cones[:, 0], blue_cones[:, 1], s=7, c="b", marker="^")
-    plt.scatter(yellow_cones[:, 0], yellow_cones[:, 1], s=7, c="y", marker="^")
+    plt.scatter(blue_cones[:, 0], blue_cones[:, 1], s=14, c="b", marker="^")
+    plt.scatter(yellow_cones[:, 0], yellow_cones[:, 1], s=14, c="y", marker="^")
     plt.scatter(
-        big_orange_cones[:, 0], big_orange_cones[:, 1], s=14, c="orange", marker="^"
+        big_orange_cones[:, 0], big_orange_cones[:, 1], s=28, c="orange", marker="^"
     )
     try:
         plt.scatter(
