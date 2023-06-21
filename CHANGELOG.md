@@ -1,3 +1,7 @@
+# v3.2.1
+
+corrected positions of big_orange cones in VSV_XL
+
 # v3.2.0
 
 added VSV and VSV_XL track (U-turns and acceleration tests)
