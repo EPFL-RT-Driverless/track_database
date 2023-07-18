@@ -18,6 +18,7 @@ available_tracks = [
     "21_05_2023",
     "VSV",
     "VSV_XL",
+    "test_track"
 ]
 
 

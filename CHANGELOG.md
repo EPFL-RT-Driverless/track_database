@@ -1,3 +1,7 @@
+# v3.3.0
+
+added test_track (scaled down VSV track)
+
 # v3.2.0
 
 added VSV and VSV_XL track (U-turns and acceleration tests)
