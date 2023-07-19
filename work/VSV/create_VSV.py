@@ -11,22 +11,22 @@ import numpy as np
 
 
 def main(name, right_width, left_width):
-    yellow_line_1 = line(-left_width, 0.0, -left_width, 30.0, 8, endpoint=False)
-    blue_line_1 = line(right_width, 0.0, right_width, 30.0, 8, endpoint=False)
-    yellow_line_2 = line(
+    blue_line_1 = line(-left_width, 0.0, -left_width, 30.0, 8, endpoint=False)
+    yellow_line_1 = line(right_width, 0.0, right_width, 30.0, 8, endpoint=False)
+    blue_line_2 = line(
         -15.0 + left_width, 30.0, -15.0 + left_width, 0.0, 8, startpoint=False
     )
-    blue_line_2 = line(
+    yellow_line_2 = line(
         -15.0 - right_width, 30.0, -15.0 - right_width, 0.0, 8, startpoint=False
     )
-    yellow_arc_1 = circular_arc(
+    blue_arc_1 = circular_arc(
         -7.5, 30.0, 7.5 - left_width, 0.0, np.pi, 7, endpoint=True
     )
-    blue_arc_1 = circular_arc(
+    yellow_arc_1 = circular_arc(
         -7.5, 30.0, 7.5 + right_width, 0.0, np.pi, 7, endpoint=True
     )
-    blue_cones = np.concatenate((blue_line_1, blue_arc_1, blue_line_2))
     yellow_cones = np.concatenate((yellow_line_1, yellow_arc_1, yellow_line_2))
+    blue_cones = np.concatenate((blue_line_1, blue_arc_1, blue_line_2))
     big_orange_cones = np.array([[1.5, 4.75], [1.5, 5.25], [-1.5, 4.75], [-1.5, 5.25]])
     save_cones(f"{name}_cones.csv", blue_cones, yellow_cones, big_orange_cones, [])
 
@@ -52,7 +52,7 @@ def visualize(name):
 
 
 if __name__ == "__main__":
-    # name, right_width, left_width = "VSV", 1.5, 1.5
-    name, right_width, left_width = "VSV_XL", 2.5, 2.5
+    name, right_width, left_width = "VSV", 1.5, 1.5
+    # name, right_width, left_width = "VSV_XL", 2.5, 2.5
     main(name, right_width, left_width)
     visualize(name)

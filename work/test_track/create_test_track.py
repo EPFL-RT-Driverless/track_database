@@ -11,21 +11,21 @@ import numpy as np
 
 
 def main(name, track_width, length, width, ncones_straight, ncones_arc):
-    yellow_line_1 = line(
+    blue_line_1 = line(
         -track_width, 0.0, -track_width, length, ncones_straight, endpoint=False
     )
-    blue_line_1 = line(
+    yellow_line_1 = line(
         track_width, 0.0, track_width, length, ncones_straight, endpoint=False
     )
-    yellow_line_2 = line(
-        -width + track_width,
-        length,
-        -width + track_width,
-        0.0,
-        ncones_straight,
-        startpoint=False,
-    )
     blue_line_2 = line(
+        -width + track_width,
+        length,
+        -width + track_width,
+        0.0,
+        ncones_straight,
+        startpoint=False,
+    )
+    yellow_line_2 = line(
         -width - track_width,
         length,
         -width - track_width,
@@ -33,7 +33,7 @@ def main(name, track_width, length, width, ncones_straight, ncones_arc):
         ncones_straight,
         startpoint=False,
     )
-    yellow_arc_1 = circular_arc(
+    blue_arc_1 = circular_arc(
         -width / 2,
         length,
         width / 2 - track_width,
@@ -42,7 +42,7 @@ def main(name, track_width, length, width, ncones_straight, ncones_arc):
         ncones_arc,
         endpoint=True,
     )
-    blue_arc_1 = circular_arc(
+    yellow_arc_1 = circular_arc(
         -width / 2,
         length,
         width / 2 + track_width,
@@ -51,8 +51,8 @@ def main(name, track_width, length, width, ncones_straight, ncones_arc):
         ncones_arc,
         endpoint=True,
     )
-    blue_cones = np.concatenate((blue_line_1, blue_arc_1, blue_line_2))
     yellow_cones = np.concatenate((yellow_line_1, yellow_arc_1, yellow_line_2))
+    blue_cones = np.concatenate((blue_line_1, blue_arc_1, blue_line_2))
     big_orange_cones = np.array([[1.5, 4.75], [1.5, 5.25], [-1.5, 4.75], [-1.5, 5.25]])
     save_cones(f"{name}_cones.csv", blue_cones, yellow_cones, big_orange_cones, [])
 

@@ -7,6 +7,8 @@ from track_database.utils import *
 
 if __name__ == "__main__":
     for track_name in available_tracks:
+        if not track_name in {"VSV", "VSV_XL", "test_track"}:
+            continue
         track = load_track(track_name)
         # plt.figure()
         plt.title(track_name)
