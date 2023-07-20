@@ -1,6 +1,6 @@
 # v3.3.0
 
-added test_track (scaled down VSV track)
+added VSV_XS variantn and removed big orange cones from all VSV tracks
 
 # v3.2.0
 

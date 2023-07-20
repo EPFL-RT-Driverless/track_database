@@ -17,8 +17,8 @@ available_tracks = [
     "fsds_default",
     "21_05_2023",
     "VSV",
+    "VSV_XS",
     "VSV_XL",
-    "test_track"
 ]
 
 

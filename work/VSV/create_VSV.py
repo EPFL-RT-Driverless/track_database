@@ -10,31 +10,72 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-def main(name, right_width, left_width):
-    blue_line_1 = line(-left_width, 0.0, -left_width, 30.0, 8, endpoint=False)
-    yellow_line_1 = line(right_width, 0.0, right_width, 30.0, 8, endpoint=False)
+def main(name, track_width, length, width, ncones_straight, ncones_arc):
+    blue_line_1 = line(
+        -track_width, 0.0, -track_width, length, ncones_straight, endpoint=False
+    )
+    yellow_line_1 = line(
+        track_width, 0.0, track_width, length, ncones_straight, endpoint=False
+    )
     blue_line_2 = line(
-        -15.0 + left_width, 30.0, -15.0 + left_width, 0.0, 8, startpoint=False
+        -width + track_width,
+        length,
+        -width + track_width,
+        0.0,
+        ncones_straight,
+        startpoint=False,
     )
     yellow_line_2 = line(
-        -15.0 - right_width, 30.0, -15.0 - right_width, 0.0, 8, startpoint=False
+        -width - track_width,
+        length,
+        -width - track_width,
+        0.0,
+        ncones_straight,
+        startpoint=False,
     )
     blue_arc_1 = circular_arc(
-        -7.5, 30.0, 7.5 - left_width, 0.0, np.pi, 7, endpoint=True
+        -width / 2,
+        length,
+        width / 2 - track_width,
+        0.0,
+        np.pi,
+        ncones_arc,
+        endpoint=True,
     )
     yellow_arc_1 = circular_arc(
-        -7.5, 30.0, 7.5 + right_width, 0.0, np.pi, 7, endpoint=True
+        -width / 2,
+        length,
+        width / 2 + track_width,
+        0.0,
+        np.pi,
+        ncones_arc,
+        endpoint=True,
     )
     yellow_cones = np.concatenate((yellow_line_1, yellow_arc_1, yellow_line_2))
     blue_cones = np.concatenate((blue_line_1, blue_arc_1, blue_line_2))
-    big_orange_cones = np.array([[1.5, 4.75], [1.5, 5.25], [-1.5, 4.75], [-1.5, 5.25]])
-    save_cones(f"{name}_cones.csv", blue_cones, yellow_cones, big_orange_cones, [])
+    save_cones(f"{name}_cones.csv", blue_cones, yellow_cones, [], [])
 
     center_line = np.vstack(
         (
-            line(0.0, 0.0, 0.0, 30.0, number_points=6, endpoint=False),
-            circular_arc(-7.5, 30.0, 7.5, 0.0, np.pi, number_points=6, endpoint=False),
-            line(-15.0, 30.0, -15.0, 0.0, endpoint=True, number_points=8),
+            line(0.0, 0.0, 0.0, length, number_points=ncones_straight, endpoint=False),
+            circular_arc(
+                -width / 2,
+                length,
+                width / 2,
+                0.0,
+                np.pi,
+                number_points=ncones_arc + 1,
+                endpoint=False,
+            ),
+            line(
+                -width,
+                length,
+                -width,
+                0.0,
+                startpoint=True,
+                endpoint=True,
+                number_points=ncones_straight + 1,
+            ),
         )
     )
     save_center_line(
@@ -52,7 +93,51 @@ def visualize(name):
 
 
 if __name__ == "__main__":
-    name, right_width, left_width = "VSV", 1.5, 1.5
-    # name, right_width, left_width = "VSV_XL", 2.5, 2.5
-    main(name, right_width, left_width)
+    (
+        name,
+        track_width,
+        length,
+        width,
+        ncones_straight,
+        ncones_arc,
+    ) = (
+        "VSV_XS",
+        2.0,
+        15.0,
+        10.0,
+        5,
+        7,
+    )
+    (
+        name,
+        track_width,
+        length,
+        width,
+        ncones_straight,
+        ncones_arc,
+    ) = (
+        "VSV",
+        1.5,
+        30.0,
+        15.0,
+        8,
+        7,
+    )
+    (
+        name,
+        track_width,
+        length,
+        width,
+        ncones_straight,
+        ncones_arc,
+    ) = (
+        "VSV_XL",
+        2.5,
+        30.0,
+        15.0,
+        8,
+        7,
+    )
+
+    main(name, track_width, length, width, ncones_straight, ncones_arc)
     visualize(name)
