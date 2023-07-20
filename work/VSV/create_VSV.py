@@ -84,8 +84,13 @@ def main(name, track_width, length, width, ncones_straight, ncones_arc):
 
 
 def visualize(name):
-    blue_cones, yellow_cones, _, _, _, _ = load_cones(f"{name}_cones.csv")
+    blue_cones, yellow_cones, big_orange_cones, _, _, _ = load_cones(
+        f"{name}_cones.csv"
+    )
     plot_cones(blue_cones, yellow_cones, np.empty((0, 2)), np.empty((0, 2)), show=False)
+    plt.scatter(
+        big_orange_cones[:, 0], big_orange_cones[:, 1], c="orange", marker="^", s=28
+    )
     center_line, _ = load_center_line(f"{name}_center_line.csv")
     plt.plot(center_line[:, 0], center_line[:, 1], "k--")
     plt.scatter(center_line[:, 0], center_line[:, 1], c="k")
