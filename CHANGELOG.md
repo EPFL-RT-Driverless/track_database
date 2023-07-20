@@ -1,3 +1,6 @@
+# v3.3.0
+
+added VSV_XS variantn and removed big orange cones from all VSV tracks
 # v3.2.1
 
 corrected positions of big_orange cones in VSV_XL

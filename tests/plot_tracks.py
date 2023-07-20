@@ -6,9 +6,11 @@ from track_database import *
 from track_database.utils import *
 
 if __name__ == "__main__":
-    for track_name in available_tracks:
+    # tracks = available_tracks
+    tracks = {"VSV", "VSV_XS", "VSV_XL"}
+    for track_name in tracks:
         track = load_track(track_name)
-        # plt.figure()
+        plt.figure()
         plt.title(track_name)
         plot_cones(
             track.blue_cones,
