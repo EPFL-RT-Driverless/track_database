@@ -20,6 +20,9 @@ available_tracks = [
     "fsds_competition_3",
     "fsds_default",
     "21_05_2023",
+    "VSV",
+    "VSV_XS",
+    "VSV_XL",
 ]
 
 
@@ -51,10 +54,25 @@ class Track:
     def __init__(self, name: str):
         self.name = name
         if name not in available_tracks:
-            try :
-                cone_file = os.path.join(name, list(filter(lambda file : file.endswith("_cones.csv"), os.listdir(name)))[0])
+            try:
+                cone_file = os.path.join(
+                    name,
+                    list(
+                        filter(
+                            lambda file: file.endswith("_cones.csv"), os.listdir(name)
+                        )
+                    )[0],
+                )
                 print("Cone file : ", cone_file)
-                center_line = os.path.join(name, list(filter(lambda file : file.endswith("_center_line.csv"), os.listdir(name)))[0])
+                center_line = os.path.join(
+                    name,
+                    list(
+                        filter(
+                            lambda file: file.endswith("_center_line.csv"),
+                            os.listdir(name),
+                        )
+                    )[0],
+                )
                 print("center line file : ", center_line)
                 (
                     self.blue_cones,
@@ -63,15 +81,24 @@ class Track:
                     self.small_orange_cones,
                     self.right_cones,
                     self.left_cones,
-                ) = load_cones( cone_file )
+                ) = load_cones(cone_file)
                 self.center_line, self.track_widths = load_center_line(center_line)
             except IndexError:
                 raise ValueError(
                     f"Track {name} not available, or could not find the required csv files. Available tracks are: {available_tracks}"
                 )
-        else :
-            path_to_file = os.path.dirname(__file__) + "/data/" + name + "/" + name + "_cones.csv"
-            path_to_center_line = os.path.dirname(__file__) + "/data/" + name + "/" + name + "_center_line.csv" 
+        else:
+            path_to_file = (
+                os.path.dirname(__file__) + "/data/" + name + "/" + name + "_cones.csv"
+            )
+            path_to_center_line = (
+                os.path.dirname(__file__)
+                + "/data/"
+                + name
+                + "/"
+                + name
+                + "_center_line.csv"
+            )
             (
                 self.blue_cones,
                 self.yellow_cones,
@@ -79,10 +106,9 @@ class Track:
                 self.small_orange_cones,
                 self.right_cones,
                 self.left_cones,
-            ) = load_cones( path_to_file )
+            ) = load_cones(path_to_file)
 
             self.center_line, self.track_widths = load_center_line(path_to_center_line)
-        
 
 
 def load_track(name: str) -> Track:
