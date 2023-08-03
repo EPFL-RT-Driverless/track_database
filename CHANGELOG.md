@@ -1,3 +1,7 @@
+# v3.4.0
+
+able to load unregistered tracks now
+
 # v3.1.0
 
 added new track (oval) for the tests on 21/05/2023
