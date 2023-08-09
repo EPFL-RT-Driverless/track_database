@@ -1,3 +1,6 @@
+# v3.4.0
+
+able to load unregistered tracks now
 # v3.3.0
 
 added VSV_XS variantn and removed big orange cones from all VSV tracks
