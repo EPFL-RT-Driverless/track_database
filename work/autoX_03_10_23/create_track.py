@@ -1,6 +1,7 @@
 from track_database.primitives import line, circular_arc
 from track_database.utils import save_cones, save_center_line
 import numpy as np
+from icecream import ic
 
 
 def main():
@@ -85,26 +86,29 @@ def main():
     )
     center_line = np.vstack(
         (
-            line(0, -1.5, 0, 9, number_points=10, endpoint=True),
-            circular_arc(1.5, 9, 1.5, np.pi, np.pi / 2, number_points=3, endpoint=True),
-            circular_arc(1.5, 12, 1.5, -np.pi / 2, 0, number_points=3, endpoint=True),
-            line(3, 12, 3, 21, number_points=10, endpoint=True),
-            circular_arc(0, 21, 3, 0, np.pi, number_points=10, endpoint=True),
-            line(-3, 21, -3, 18, number_points=3, endpoint=True),
-            circular_arc(-7.5, 18, 4.5, 0, -np.pi / 2, number_points=8, endpoint=True),
+            line(0, -1.5, 0, 9, number_points=10, endpoint=False),
+            circular_arc(1.5, 9, 1.5, np.pi, np.pi / 2, number_points=3, endpoint=False),
+            circular_arc(1.5, 12, 1.5, -np.pi / 2, 0, number_points=3, endpoint=False),
+            line(3, 12, 3, 21, number_points=10, endpoint=False),
+            circular_arc(0, 21, 3, 0, np.pi, number_points=10, endpoint=False),
+            line(-3, 21, -3, 18, number_points=3, endpoint=False),
+            circular_arc(-7.5, 18, 4.5, 0, -np.pi / 2, number_points=8, endpoint=False),
             circular_arc(
-                -7.5, 9, 4.5, np.pi / 2, np.pi, number_points=8, endpoint=True
+                -7.5, 9, 4.5, np.pi / 2, np.pi, number_points=8, endpoint=False
             ),
-            line(-12, 9, -12, -1.5, number_points=12, endpoint=True),
+            line(-12, 9, -12, -1.5, number_points=12, endpoint=False),
             circular_arc(
-                -7.5, -1.5, 4.5, -np.pi, -np.pi / 2, number_points=8, endpoint=True
+                -7.5, -1.5, 4.5, -np.pi, -np.pi / 2, number_points=8, endpoint=False
             ),
-            line(-7.5, -6, -4.5, -6, number_points=4, endpoint=True),
+            line(-7.5, -6, -4.5, -6, number_points=4, endpoint=False),
             circular_arc(
                 -4.5, -1.5, 4.5, -np.pi / 2, 0, number_points=8, endpoint=True
             ),
         )
     )
+    diffs = np.linalg.norm(np.diff(center_line, axis=0), axis=1)
+    # print where 0
+    ic(np.argwhere(diffs < 1e-2))
 
     save_cones(
         "autoX_Vaudoise_Sponso_cones.csv", blue_line, yellow_line, big_orange_cones, []
