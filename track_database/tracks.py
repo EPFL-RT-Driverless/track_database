@@ -19,6 +19,7 @@ available_tracks = [
     "VSV",
     "VSV_XS",
     "VSV_XL",
+    "autoX_Vaudoise_Sponso",
 ]
 
 
