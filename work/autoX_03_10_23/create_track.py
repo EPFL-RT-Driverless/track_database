@@ -87,7 +87,9 @@ def main():
     center_line = np.vstack(
         (
             line(0, -1.5, 0, 9, number_points=10, endpoint=False),
-            circular_arc(1.5, 9, 1.5, np.pi, np.pi / 2, number_points=3, endpoint=False),
+            circular_arc(
+                1.5, 9, 1.5, np.pi, np.pi / 2, number_points=3, endpoint=False
+            ),
             circular_arc(1.5, 12, 1.5, -np.pi / 2, 0, number_points=3, endpoint=False),
             line(3, 12, 3, 21, number_points=10, endpoint=False),
             circular_arc(0, 21, 3, 0, np.pi, number_points=10, endpoint=False),
