@@ -1,6 +1,7 @@
-# v3.4.0
+# v3.5.0
 added new (small) autoX track for Vaudoise event
 
+# v3.4.0
 
 able to load unregistered tracks now
 
