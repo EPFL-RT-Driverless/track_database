@@ -1,3 +1,5 @@
 # Copyright (c) Tudor Oancea, EPFL Racing Team Driverless 2022
 numpy
 matplotlib
+pandas
+dict2xml
