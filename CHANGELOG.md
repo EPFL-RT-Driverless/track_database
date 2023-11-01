@@ -1,3 +1,6 @@
+# v3.6.0
+added new file to export csv track as a .world file for the baudousim
+
 # v3.5.0
 added new (small) autoX track for Vaudoise event
 
