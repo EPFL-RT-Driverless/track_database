@@ -55,6 +55,19 @@ class WorldElement():
         }} 
 
 
+class CenterElement(WorldElement):
+    def __init__(self, name: str, pose: list, count: int):
+        super().__init__(name, pose, count)
+    
+    @staticmethod
+    def _map_name(name: str) -> str:
+        return name
+    
+    @staticmethod
+    def _map_model_uri(name: str) -> str:
+        return 'model://center'
+
+
 class TrackParser():
     """
     This class provides methods to build a world file compatible with gazebo
@@ -65,10 +78,12 @@ class TrackParser():
         self.track_name = track_name
         self.add_sun = add_sun
         self.add_ground = add_ground
-        self.cones = self._read_csv(track_name) 
+        self.cones = self._read_csv(track_name, suffix='cones') 
         self.cone_types = set(self.cones.cone_type)
+        self.centers = self._read_csv(track_name, suffix='center_line')
         self.elements = []
         self._extract_cone_information()
+        self._extract_center_information()
         self._to_dict()
         
         self._to_xml()
@@ -76,9 +91,9 @@ class TrackParser():
         self._wrap_xml('sdf', 'version', '1.4')
         self._clean_xml()
 
-    def _read_csv(self, track_name: str) -> pd.DataFrame:
+    def _read_csv(self, track_name: str, suffix: str) -> pd.DataFrame:
         track_folder_path = self.PATH_TO_DATABASE / track_name
-        cone_positions = track_name + '_cones.csv'
+        cone_positions = track_name + '_' + suffix + '.csv'
         return pd.read_csv(track_folder_path / cone_positions)
 
     def _extract_cone_information(self):
@@ -86,6 +101,11 @@ class TrackParser():
             for index, cone in self.cones[self.cones.cone_type == cone_type].reset_index().iterrows():
                 element = WorldElement(cone_type, [cone.X, cone.Y, cone.Z], index)
                 self.elements.append(element)
+        
+    def _extract_center_information(self):
+        for index, center in self.centers.iterrows():
+            element = CenterElement('center', [center.x, center.y, 0], index)
+            self.elements.append(element)
 
     def _to_dict(self) -> None:
         self.elements = [element.to_dict() for element in self.elements]
