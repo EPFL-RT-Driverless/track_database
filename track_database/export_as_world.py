@@ -87,7 +87,7 @@ class TrackParser():
         self._to_dict()
         
         self._to_xml()
-        self._wrap_xml('world', 'name', 'acceleration')
+        self._wrap_xml('world', 'name', self.track_name)
         self._wrap_xml('sdf', 'version', '1.4')
         self._clean_xml()
 
