@@ -24,6 +24,7 @@ available_tracks = [
     "VSV_XS",
     "VSV_XL",
     "autoX_Vaudoise_Sponso",
+    "bike_test_0"
 ]
 
 
