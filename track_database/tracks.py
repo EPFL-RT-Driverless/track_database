@@ -24,7 +24,10 @@ available_tracks = [
     "VSV_XS",
     "VSV_XL",
     "autoX_Vaudoise_Sponso",
-    "bike_test_0"
+    "bike_test_0",
+    "bike_test_straight_5m",
+    "bike_test_straight_3m"
+
 ]
 
 

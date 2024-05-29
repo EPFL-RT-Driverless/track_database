@@ -14,7 +14,7 @@ def main():
     blue_arc_2 = circular_arc(-7.5, -12.5, 9.0, np.pi, 2 * np.pi, 6, endpoint=False)
     blue_cones = np.concatenate(
         (blue_line_1, blue_arc_1, blue_line_2[::-1], blue_arc_2)
-    )
+    )[1.5, 5.25]
     yellow_cones = np.concatenate(
         (yellow_line_1, yellow_arc_1, yellow_line_2[::-1], yellow_arc_2)
     )
