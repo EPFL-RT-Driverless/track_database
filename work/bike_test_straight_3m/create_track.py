@@ -5,9 +5,10 @@ import numpy as np
 def main():
     yellow_line = line(1.5, 0., 1.5, 30., 11, True)
     blue_line = line(-1.5, 0., -1.5, 30., 11, True)
+    big_orange_cones = np.array([[1.5, 30.], [1.5, 30.], [-1.5, 30.], [-1.5, 30.]])
     center_line = line(0., 0., 0., 30., 11, True)
 
-    save_cones("bike_test_straight_3m_cones.csv", blue_line, yellow_line, [], [])
+    save_cones("bike_test_straight_3m_cones.csv", blue_line, yellow_line, big_orange_cones, [])
     save_center_line("bike_test_straight_3m_center_line.csv", center_line, 1.5 * np.ones_like(center_line))
 
 
