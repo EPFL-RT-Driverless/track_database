@@ -12,6 +12,7 @@ except ImportError:
 __all__ = ["available_tracks", "load_track", "Track"]
 
 available_tracks = [
+    "21_05_2023",
     "acceleration",
     "skidpad",
     "short_skidpad",
@@ -19,7 +20,11 @@ available_tracks = [
     "fsds_competition_2",
     "fsds_competition_3",
     "fsds_default",
-    "21_05_2023",
+    "track_1",
+    "track_2",
+    "track_3",
+    "track_4",
+    "track_5",
     "VSV",
     "VSV_XS",
     "VSV_XL",
@@ -60,7 +65,7 @@ class Track:
                     name,
                     list(
                         filter(
-                            lambda file: file.endswith("_cones.csv"), os.listdir(name)
+                            lambda file: file.endswith("cones.csv"), os.listdir(name)
                         )
                     )[0],
                 )
@@ -69,7 +74,7 @@ class Track:
                     name,
                     list(
                         filter(
-                            lambda file: file.endswith("_center_line.csv"),
+                            lambda file: file.endswith("center_line.csv"),
                             os.listdir(name),
                         )
                     )[0],

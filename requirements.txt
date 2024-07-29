@@ -3,3 +3,5 @@ numpy
 matplotlib
 pandas
 dict2xml
+shapely
+scipy
