@@ -1,7 +1,13 @@
+# v3.7.0
+
+added support for random track generation as well as 5 new tracks
+
 # v3.6.0
+
 added new file to export csv track as a .world file for the baudousim
 
 # v3.5.0
+
 added new (small) autoX track for Vaudoise event
 
 # v3.4.0
