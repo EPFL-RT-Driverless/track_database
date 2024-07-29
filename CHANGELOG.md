@@ -1,3 +1,7 @@
+# v3.7.1 
+
+fixed order of points in random track generation and regenerated tracks 1 to 5 (not the same anymore)
+
 # v3.7.0
 
 added support for random track generation as well as 5 new tracks

@@ -288,7 +288,7 @@ class TrackGenerator:
                 tck, _ = interpolate.splprep(
                     [sorted_vertices[:, 0], sorted_vertices[:, 1]], s=0, per=True
                 )
-                t = np.linspace(0, 1, 200)
+                t = np.linspace(0, 1, 200, endpoint=False)
                 x, y = interpolate.splev(t, tck, der=0)
                 dx_dt, dy_dt = interpolate.splev(t, tck, der=1)
                 d2x_dt2, d2y_dt2 = interpolate.splev(t, tck, der=2)
@@ -376,7 +376,7 @@ class TrackGenerator:
             if length_straights[i]:
                 length_straights[i] += length_straights[i - 1]
 
-        # Find start line and start pose
+        # Find start line
         length_start_area = (
             self._length_start_area
             if length_straights.max() > self._length_start_area
@@ -388,22 +388,29 @@ class TrackGenerator:
             raise Exception(
                 "Unable to find suitable starting position. Try to decrease the length of the starting area or different input parameters."
             )
-        start_line = np.array([x[start_line_index], y[start_line_index]])
-        start_position = np.asarray(
-            track.exterior.interpolate(
-                np.sum(distances[:start_line_index]) - length_start_area
-            )
-        ).flatten()
-        start_position = np.array([start_position[0].x, start_position[0].y])
-        start_heading = float(np.arctan2(*(start_line - start_position)))
+        # find origin
+        rel_distances = np.cumsum(distances)
+        rel_distances -= rel_distances[start_line_index]
+        origin_index = np.min(np.argwhere(rel_distances >= -6.0))
+        start_position = np.array([x[origin_index], y[origin_index]])
 
         # Translate and rotate track to origin
-        M = transformation_matrix(-start_position, start_heading)
-        self.blue_cones = M.dot(np.c_[cones_left, np.ones(len(cones_left))].T)[:-1].T
-        self.yellow_cones = M.dot(np.c_[cones_right, np.ones(len(cones_right))].T)[
-            :-1
-        ].T
-        self.center_line = (np.column_stack([x, y, np.ones_like(x)]) @ M.T)[:, :-1]
+        x = np.concatenate((x[origin_index:], x[:origin_index]))
+        y = np.concatenate((y[origin_index:], y[:origin_index]))
+        self.blue_cones = cones_left - start_position
+        self.yellow_cones = cones_right - start_position
+        self.center_line = np.column_stack((x, y)) - start_position
+        start_heading = np.arctan2(y[1] - y[0], x[1] - x[0])
+        angle_offset = np.pi / 2 - start_heading
+        rot = np.array(
+            [
+                [np.cos(angle_offset), -np.sin(angle_offset)],
+                [np.sin(angle_offset), np.cos(angle_offset)],
+            ]
+        )
+        self.blue_cones = self.blue_cones @ rot.T
+        self.yellow_cones = self.yellow_cones @ rot.T
+        self.center_line = self.center_line @ rot.T
 
         # Create track file
         if plot_voronoi:
@@ -480,7 +487,7 @@ class TrackGenerator:
             np.empty((0, 2)),
             show=False,
         )
-        plt.scatter(*self.center_line.T, c="k", s=2, marker="o")
+        plt.plot(*self.center_line.T, "k-o", markersize=2)
         plt.xlabel("x [m]")
         plt.ylabel("y [m]")
         plt.axis("equal")
@@ -503,8 +510,8 @@ class TrackGenerator:
         )
         save_center_line(
             os.path.join(track_dir, track_name + "_center_line.csv"),
-            self.center_line[:, :-1],
-            np.full_like(self.center_line[:, :-1], self._track_width / 2),
+            self.center_line,
+            np.full_like(self.center_line, self._track_width / 2),
         )
 
 
