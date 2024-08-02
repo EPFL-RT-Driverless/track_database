@@ -29,6 +29,7 @@ available_tracks = [
     "VSV_XS",
     "VSV_XL",
     "autoX_Vaudoise_Sponso",
+    "skidpad_new",
 ]
 
 
