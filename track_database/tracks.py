@@ -14,6 +14,9 @@ __all__ = ["available_tracks", "load_track", "Track"]
 available_tracks = [
     "21_05_2023",
     "acceleration",
+    "acceleration_4m",
+    "acceleration_4_5m",
+    "acceleration_5_5m",
     "skidpad",
     "short_skidpad",
     "fsds_competition_1",
